@@ -44,29 +44,88 @@ export const about = async () => {
 	}
 }
 
-export const clearData = async () => {
-	const confirm0 = await dialog.ask("Are you sure you want to clear all data? \n\nThis cannot be undone!", { type: "warning" })
+/**
+ * Delete selected data
+ */
+export const clearData = async (clearCodesOption: boolean, clearSettingsOption: boolean) => {
+	const dialogClearData: LibDialogElement = document.querySelector(".dialogClearData")
 
-	if (confirm0 === false) {
-		return
+	// clear codes
+	if (clearCodesOption && !clearSettingsOption) {
+		const confirm0 = await dialog.ask("Are you sure you want to clear 2FA codes? \n\nThis cannot be undone!", { type: "warning" })
+
+		if (confirm0 === false) {
+			return
+		}
+
+		settings.vault.codes = null
+		setSettings(settings)
+
+		dialogClearData.close()
+		navigate("codes")
 	}
 
-	const confirm1 = await dialog.ask("Are you absolutely sure? \n\nThere is no way back!", { type: "warning" })
+	// clear settings
+	if (!clearCodesOption && clearSettingsOption) {
+		const confirm0 = await dialog.ask("Are you sure you want to clear all settings? \n\nThis cannot be undone!", { type: "warning" })
 
-	if (confirm1 === true) {
-		localStorage.clear()
-		sessionStorage.clear()
+		if (confirm0 === false) {
+			return
+		}
 
-		await deleteEncryptionKey("encryptionKey")
+		settings.settings.language = 0
+		settings.settings.launchOnStartup = true
+		settings.settings.minimizeToTray = true
+		settings.settings.optionalAnalytics = true
+		settings.settings.codesDescription = false
+		settings.settings.blurCodes = false
+		settings.settings.sortCodes = 0
+		settings.settings.codesLayout = 0
+		setSettings(settings)
 
-		if (build.dev === false) {
-			await invoke("disable_auto_launch")
-			process.exit()
-		} else {
-			navigate("/")
-			location.reload()
+		dialogClearData.close()
+		navigate("settings")
+	}
+
+	// clear everything
+	if (clearCodesOption && clearSettingsOption) {
+		const confirm0 = await dialog.ask("Are you sure you want to clear all data? \n\nThis cannot be undone!", { type: "warning" })
+
+		if (confirm0 === false) {
+			return
+		}
+
+		const confirm1 = await dialog.ask("Are you absolutely sure? \n\nThere is no way back!", { type: "warning" })
+
+		if (confirm1 === true) {
+			localStorage.clear()
+			sessionStorage.clear()
+
+			await deleteEncryptionKey("encryptionKey")
+
+			if (build.dev === false) {
+				await invoke("disable_auto_launch")
+				process.exit()
+			} else {
+				navigate("/")
+				location.reload()
+			}
 		}
 	}
+}
+
+/**
+ * Show Clear data dialog
+ */
+export const showClearDataDialog = () => {
+	const dialogClearData: LibDialogElement = document.querySelector(".dialogClearData")
+	const closeDialog = document.querySelector(".dialogClearDataClose")
+
+	closeDialog.addEventListener("click", () => {
+		dialogClearData.close()
+	})
+
+	dialogClearData.showModal()
 }
 
 /**
