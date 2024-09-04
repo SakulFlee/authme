@@ -128,16 +128,6 @@ export const showClearDataDialog = () => {
 	dialogClearData.showModal()
 }
 
-/**
- * Delete all imported codes
- */
-export const deleteCodes = async () => {
-	settings.vault.codes = null
-	setSettings(settings)
-
-	navigate("codes")
-}
-
 export const showLogs = async () => {
 	const folderPath = await path.join(await path.cacheDir(), "com.levminer.authme", "logs")
 	open(folderPath)
