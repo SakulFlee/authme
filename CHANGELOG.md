@@ -1,3 +1,16 @@
+### Authme 5.3.0 (2024. September 10.)
+
+-   [[961730a](https://github.com/Levminer/authme/commit/961730a)] Remove old delete codes (2024-09-04)
+-   [[8305443](https://github.com/Levminer/authme/commit/8305443)] Make clear data button more granular (#315) (2024-09-01)
+-   [[97a3aa5](https://github.com/Levminer/authme/commit/97a3aa5)] Fix Windows sign (#316) (2024-08-30)
+
+### Authme 5.2.2 (2024. August 13.)
+
+-   [[53062e7](https://github.com/Levminer/authme/commit/53062e7)] Sponsor banner (2024-08-13)
+-   [[ab30f4e](https://github.com/Levminer/authme/commit/ab30f4e)] Fix creating password flow (2024-08-06)
+-   [[59f7ef8](https://github.com/Levminer/authme/commit/59f7ef8)] Improved TOTP URL parsing (2024-07-29)
+-   [[0bcdad2](https://github.com/Levminer/authme/commit/0bcdad2)] Fix 2FAS manual import #307 (2024-07-27)
+
 ### Authme 5.2.1 (2024. June 18.)
 
 -   [[822ce1d](https://github.com/Levminer/authme/commit/822ce1d)] Update to svelte 4 + updated crates (2024-06-18)
